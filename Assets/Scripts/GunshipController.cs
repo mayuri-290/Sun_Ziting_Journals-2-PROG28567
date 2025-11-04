@@ -8,6 +8,9 @@ public class GunshipController : MonoBehaviour
     public GameObject cannonballPrefab;
     public float cannonballForce = 150f;
 
+    private bool wasLeftMousePressed = false;
+    private bool wasRightMousePressed = false;
+
 
     void Update()
     {
