@@ -7,6 +7,10 @@ public class GunshipController : MonoBehaviour
 
     public GameObject cannonballPrefab;
     public float cannonballForce = 150f;
+        public Transform LeftCannon;
+    public Transform RightCannon;
+    public GameObject CannonballPrefab;
+    public float cannonForce=150f;
 
     void Update()
     {
@@ -16,6 +20,20 @@ public class GunshipController : MonoBehaviour
         //These methods aim the cannons based on where the mouse is in the 2D space
         Vector3 leftDirection = AimCannon(mousePosition, leftCannon);
         Vector3 rightDirection = AimCannon(mousePosition, rightCannon);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject createdCannonball = Instantiate(CannonballPrefab, LeftCannon.transform.position, Quaternion.identity);
+            Rigidbody2D cannonballRB = createdCannonball.GetComponent<Rigidbody2D>();
+            cannonballRB.AddForce(LeftCannon.right * cannonForce, ForceMode2D.Impulse);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            GameObject createdCannonball = Instantiate(CannonballPrefab, RightCannon.transform.position, Quaternion.identity);
+            Rigidbody2D cannonballRB = createdCannonball.GetComponent<Rigidbody2D>();
+            cannonballRB.AddForce(RightCannon.right * cannonForce, ForceMode2D.Impulse);            
+
+        }
     }
 
     //Given a target position and the transform of a cannon, aims that cannon at that target
