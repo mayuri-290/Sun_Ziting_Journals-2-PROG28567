@@ -377,10 +377,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifespan: 100
-  LeftCannon: {fileID: 6443999}
-  RightCannon: {fileID: 1685397580}
-  CannonballPrefab: {fileID: 8214065686384112071, guid: 44074452453c295498f805cf7a408f27, type: 3}
-  cannonForce: 150
 --- !u!1 &959311080
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +394,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!58 &959311081
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -524,7 +520,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1020076779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,10 +1147,6 @@ MonoBehaviour:
   rightCannon: {fileID: 1685397580}
   cannonballPrefab: {fileID: 8214065686384112071, guid: 44074452453c295498f805cf7a408f27, type: 3}
   cannonballForce: 150
-  LeftCannon: {fileID: 6443999}
-  RightCannon: {fileID: 1685397580}
-  CannonballPrefab: {fileID: 8214065686384112071, guid: 44074452453c295498f805cf7a408f27, type: 3}
-  cannonForce: 150
 --- !u!4 &1800028000
 Transform:
   m_ObjectHideFlags: 0
