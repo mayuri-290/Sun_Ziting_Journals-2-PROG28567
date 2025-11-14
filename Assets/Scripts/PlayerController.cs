@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public float speed = 5f;
+    private Rigidbody2D playerRigidbody;
     public enum FacingDirection
     {
         left, right
@@ -12,7 +14,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -26,7 +28,8 @@ public class PlayerController : MonoBehaviour
 
     private void MovementUpdate(Vector2 playerInput)
     {
-
+        playerRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, playerRigidbody.velocity.y);
+        
     }
 
     public bool IsWalking()
