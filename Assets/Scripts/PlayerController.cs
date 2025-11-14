@@ -1,11 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 5f;
+    public float speed;
     private Rigidbody2D playerRigidbody;
+    private FacingDirection currentFacing = FacingDirection.right;
+    Vector2 playerInput;
+
+    bool isWalking;
+    bool isGrounded;
+
     public enum FacingDirection
     {
         left, right
@@ -22,27 +30,59 @@ public class PlayerController : MonoBehaviour
     {
         //The input from the player needs to be determined and then passed in the to the MovementUpdate which should
         //manage the actual movement of the character.
-        Vector2 playerInput = new Vector2();
+        playerInput = new Vector2();
         MovementUpdate(playerInput);
+
+        if (playerRigidbody.totalForce.x != 0)
+        {
+            isWalking = true;
+        }
+        else
+        {
+            isWalking = false;
+        }
+
+        //Debug.Log(playerInput);
+
+        if (playerRigidbody.totalForce.y != 0)
+        {
+            isGrounded = false;
+        }
+        else
+        {
+            isGrounded = true;
+        }
+        
     }
 
     private void MovementUpdate(Vector2 playerInput)
     {
-        playerRigidbody.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * speed, playerRigidbody.velocity.y);
-        
+        playerInput.x = Input.GetAxisRaw("Horizontal");
+        playerInput.y = Input.GetAxisRaw("Vertical");
+
+        playerRigidbody.AddForce(playerInput * speed);      
     }
 
     public bool IsWalking()
     {
-        return false;
+        return isWalking;
     }
     public bool IsGrounded()
     {
-        return true;
+        return isGrounded;
     }
 
     public FacingDirection GetFacingDirection()
     {
-        return FacingDirection.left;
+        if (playerRigidbody.totalForce.x > 0)
+        {
+            currentFacing = FacingDirection.right;
+        }
+        else
+        {
+            currentFacing = FacingDirection.left;
+        }
+
+        return currentFacing;
     }
 }
