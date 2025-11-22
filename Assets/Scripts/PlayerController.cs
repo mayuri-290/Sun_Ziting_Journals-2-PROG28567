@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public float apexTime, apexHeight;
     public float gravity, initialJumpVelocity;
     private bool jumpTrigger;
+    public float terminalSpeed=-20f;
 
     bool isWalking;
     bool isGrounded;
@@ -64,14 +65,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        {
             playerRigidbody.linearVelocityY+=gravity * Time.fixedDeltaTime;
+
             if(jumpTrigger)
             {
                 playerRigidbody.linearVelocityY = initialJumpVelocity;
                 jumpTrigger = false;
+            } 
+            if(playerRigidbody.linearVelocityY < terminalSpeed)
+            {
+                playerRigidbody.linearVelocityY = terminalSpeed;
             }
-        }
     }
 
     private void MovementUpdate(Vector2 playerInput)
