@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRigidbody;
     private FacingDirection currentFacing = FacingDirection.right;
     Vector2 playerInput;
+    public float apexTime, apexHeight;
+    public float gravity, initialJumpVelocity;
+    private bool jumpTrigger;
 
     bool isWalking;
     bool isGrounded;
@@ -23,6 +26,10 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        //set the gravity
+        gravity = -2 * apexHeight / (Mathf.Pow(apexTime,2));
+        //set the initial jump velocity
+        initialJumpVelocity = 2 * apexHeight / apexTime;
     }
 
     // Update is called once per frame
@@ -55,12 +62,29 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void FixedUpdate()
+    {
+        {
+            playerRigidbody.linearVelocityY+=gravity * Time.fixedDeltaTime;
+            if(jumpTrigger)
+            {
+                playerRigidbody.linearVelocityY = initialJumpVelocity;
+                jumpTrigger = false;
+            }
+        }
+    }
+
     private void MovementUpdate(Vector2 playerInput)
     {
         playerInput.x = Input.GetAxisRaw("Horizontal");
         playerInput.y = Input.GetAxisRaw("Vertical");
 
-        playerRigidbody.AddForce(playerInput * speed);      
+        playerRigidbody.AddForce(playerInput * speed);     
+
+        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            jumpTrigger = true;
+        }
     }
 
     public bool IsWalking()
