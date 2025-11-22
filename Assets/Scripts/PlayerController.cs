@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -14,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public float gravity, initialJumpVelocity;
     private bool jumpTrigger;
     public float terminalSpeed=-20f;
+    public float coyoteTime;
+    private float coyoteTimer=0f;
+
 
     bool isWalking;
     bool isGrounded;
@@ -31,6 +35,7 @@ public class PlayerController : MonoBehaviour
         gravity = -2 * apexHeight / (Mathf.Pow(apexTime,2));
         //set the initial jump velocity
         initialJumpVelocity = 2 * apexHeight / apexTime;
+        playerRigidbody.freezeRotation = true;
     }
 
     // Update is called once per frame
@@ -41,24 +46,19 @@ public class PlayerController : MonoBehaviour
         playerInput = new Vector2();
         MovementUpdate(playerInput);
 
-        if (playerRigidbody.totalForce.x != 0)
-        {
-            isWalking = true;
-        }
-        else
-        {
-            isWalking = false;
-        }
-
         //Debug.Log(playerInput);
 
-        if (playerRigidbody.totalForce.y != 0)
+        bool hitGround = Physics2D.Raycast(transform.position, Vector2.down, 0.1f);
+        isGrounded = hitGround;
+        Debug.DrawRay(transform.position, Vector2.down * 0.1f, Color.red);
+
+        if(isGrounded)
         {
-            isGrounded = false;
+            coyoteTimer = coyoteTime;
         }
         else
         {
-            isGrounded = true;
+            coyoteTimer -= Time.deltaTime;
         }
         
     }
@@ -81,11 +81,10 @@ public class PlayerController : MonoBehaviour
     private void MovementUpdate(Vector2 playerInput)
     {
         playerInput.x = Input.GetAxisRaw("Horizontal");
-        playerInput.y = Input.GetAxisRaw("Vertical");
 
         playerRigidbody.AddForce(playerInput * speed);     
 
-        if(Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if(Input.GetKeyDown(KeyCode.Space) && (isGrounded ||coyoteTimer>0f))
         {
             jumpTrigger = true;
         }
@@ -93,7 +92,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsWalking()
     {
-        return isWalking;
+        return Mathf.Abs(playerRigidbody.linearVelocityX) > 0.1f;
     }
     public bool IsGrounded()
     {
@@ -102,11 +101,12 @@ public class PlayerController : MonoBehaviour
 
     public FacingDirection GetFacingDirection()
     {
-        if (playerRigidbody.totalForce.x > 0)
+        float x =playerRigidbody.linearVelocityX;
+        if(x>0)
         {
             currentFacing = FacingDirection.right;
         }
-        else
+        else if(x<0)
         {
             currentFacing = FacingDirection.left;
         }
