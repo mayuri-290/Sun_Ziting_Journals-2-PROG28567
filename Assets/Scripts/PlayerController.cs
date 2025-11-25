@@ -22,14 +22,20 @@ public class PlayerController : MonoBehaviour
     public float acceleration;
     public float deceleration;
     private Vector3 currentVelocity;
-
-
+    public int Health;
+    private bool hasDied = false;
     bool isGrounded;
 
     public enum FacingDirection
     {
         left, right
     }
+    public enum CharacterState
+    {
+        idle, walk, jump, death
+    }
+    public CharacterState currentState= CharacterState.idle;
+    public CharacterState previousState= CharacterState.idle;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +71,30 @@ public class PlayerController : MonoBehaviour
         //manage the actual movement of the character.
         playerInput = new Vector2();
         MovementUpdate(playerInput);
-        //Debug.Log(playerInput);     
+        //Debug.Log(playerInput);   
+    }
+
+    private void StateUpdate()
+    {
+        previousState = currentState;
+        //What is our current state?
+        if(IsWalking() && IsGrounded())
+        {
+            currentState = CharacterState.walk;
+        }
+        else if(!IsGrounded())
+        {
+            currentState = CharacterState.jump;
+        }
+        else
+        {
+            currentState = CharacterState.idle;
+        }
+        if(Health <= 0)
+        {
+            currentState = CharacterState.death;
+        }
+       
     }
 
     private void FixedUpdate()
@@ -115,8 +144,20 @@ public class PlayerController : MonoBehaviour
         //         currentVelocity -= amountWeWantToChange;
         //     }
         // }
-//------------------Class code------------------//
+
      }
+
+    public bool HasDied()
+    {
+        bool isDead = Health<=0;
+        if(isDead && hasDied == false)
+        {
+            hasDied = true;
+            return true;
+        }
+        return Health <= 0;
+    }
+    //------------------Class code------------------//
 
     public bool IsWalking()
     {
