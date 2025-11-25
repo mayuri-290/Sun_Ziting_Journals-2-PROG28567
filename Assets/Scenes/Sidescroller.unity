@@ -1743,6 +1743,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1433354313}
+  bodyRenderer: {fileID: 874392359}
   playerController: {fileID: 1433354314}
 --- !u!61 &1433354317
 BoxCollider2D:

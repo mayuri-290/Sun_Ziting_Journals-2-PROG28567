@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerVisuals : MonoBehaviour
 {
     public Animator animator;
-    private SpriteRenderer bodyRenderer;
+    public SpriteRenderer bodyRenderer;
     public PlayerController playerController;
 
     private int idleHash, jumpingHash, walkingHash, deathHash;
@@ -17,10 +17,10 @@ public class PlayerVisuals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bodyRenderer = GetComponent<SpriteRenderer>();
+       // bodyRenderer = GetComponent<SpriteRenderer>();
         idleHash = Animator.StringToHash("Idle");
         jumpingHash = Animator.StringToHash("Jumping");
-        walkingHash = Animator.StringToHash("walking");
+        walkingHash = Animator.StringToHash("Walking");
         deathHash = Animator.StringToHash("Death");
     }
 
@@ -40,15 +40,15 @@ public class PlayerVisuals : MonoBehaviour
         {
             if(playerController.currentState == PlayerController.CharacterState.idle)
             {
-                animator.Play("idleHash");
+                animator.Play("Idle");
             }
             else if(playerController.currentState == PlayerController.CharacterState.walk)
             {
-                animator.Play("walkingHash");
+                animator.Play("Walking");
             }
             else if(playerController.currentState == PlayerController.CharacterState.jump)
             {
-                animator.Play("jumpingHash");
+                animator.Play("Jumping");
             }
         }
 

@@ -19,9 +19,11 @@ public class PlayerController : MonoBehaviour
     public float coyoteTime;
     private float coyoteTimer=0f;
     public float maxSpeed;
+
     public float acceleration;
     public float deceleration;
     private Vector3 currentVelocity;
+
     public int Health;
     private bool hasDied = false;
     bool isGrounded;
@@ -71,11 +73,13 @@ public class PlayerController : MonoBehaviour
         //manage the actual movement of the character.
         playerInput = new Vector2();
         MovementUpdate(playerInput);
-        //Debug.Log(playerInput);   
+        //Debug.Log(playerInput); 
+        StateUpdate ();
     }
 
     private void StateUpdate()
     {
+        //Debug.Log("Test");
         previousState = currentState;
         //What is our current state?
         if(IsWalking() && IsGrounded())
@@ -123,33 +127,33 @@ public class PlayerController : MonoBehaviour
             jumpTest = true;
         }
 //------------------Class code------------------//
-        // if(playerInput.x != 0)
-        // {
-        //    currentVelocity += playerInput.x * acceleration * Vector3.right * Time.deltaTime;
-        //    if(Mathf.Abs(currentVelocity.x) > maxSpeed)
-        //    {
-        //     currentVelocity = new Vector3(Mathf.Sign(currentVelocity.x) * maxSpeed, currentVelocity.y);
-        //    }
-        // }
-        // else
-        // {
-        //     Vector3 amountWeWantToChange = deceleration * currentVelocity.normalized * Time.deltaTime;
 
-        //     if(amountWeWantToChange.magnitude > currentVelocity.x)
-        //     {
-        //         currentVelocity.x = 0;
-        //     }
-        //     else
-        //     {
-        //         currentVelocity -= amountWeWantToChange;
-        //     }
-        // }
+        if(playerInput.x != 0)
+        {
+           currentVelocity += playerInput.x * acceleration * Vector3.right * Time.deltaTime;
+           if(Mathf.Abs(currentVelocity.x) > maxSpeed)
+           {
+            currentVelocity = new Vector3(Mathf.Sign(currentVelocity.x) * maxSpeed, currentVelocity.y);
+           }
+        }
+        else
+        {
+            Vector3 amountWeWantToChange = deceleration * currentVelocity.normalized * Time.deltaTime;
 
+            if(amountWeWantToChange.magnitude > currentVelocity.x)
+            {
+                currentVelocity.x = 0;
+            }
+            else
+            {
+                currentVelocity -= amountWeWantToChange;
+            }
+        }
      }
 
     public bool HasDied()
     {
-        bool isDead = Health<=0;
+        bool isDead = Health <= 0;
         if(isDead && hasDied == false)
         {
             hasDied = true;
