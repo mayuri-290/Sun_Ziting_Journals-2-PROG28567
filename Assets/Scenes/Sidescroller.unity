@@ -1701,7 +1701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86a1ce42ea3e3dd44868493ae73ec06d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 3
   apexTime: 0.5
   apexHeight: 3
   gravity: 0
@@ -1712,6 +1712,9 @@ MonoBehaviour:
   acceleration: 0
   deceleration: 0
   Health: 5
+  dashForce: 20
+  dashDuration: 0.2
+  isDashing: 0
   currentState: 0
   previousState: 0
 --- !u!4 &1433354315
@@ -1804,7 +1807,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 3
   m_AngularDamping: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
