@@ -33,7 +33,7 @@ public class BoxThrow : MonoBehaviour
 
         if(isHeld)
         {
-            transform.position = player.position +  Vector3.up * 0.5f;
+            transform.position = player.position +  Vector3.up * 0.5f; //when player grabs the box, it will transfor to player's above. 
         }
 
         if(isHeld&&Input.GetKeyUp(KeyCode.H))

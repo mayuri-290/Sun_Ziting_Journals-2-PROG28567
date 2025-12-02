@@ -223,7 +223,7 @@ MonoBehaviour:
   endPosition: {x: 0, y: 0, z: 0}
   startHolder: {fileID: 1099634783}
   endHolder: {fileID: 1548606660}
-  duration: 0
+  duration: 3
   currentState: 0
 --- !u!1 &519420028
 GameObject:
@@ -330,6 +330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bdaba77e613a4eb3b16df43c658363c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetHolder: {fileID: 1433354315}
+  followIntensity: 1
+  tilemap: {fileID: 0}
 --- !u!1 &874392357
 GameObject:
   m_ObjectHideFlags: 0
