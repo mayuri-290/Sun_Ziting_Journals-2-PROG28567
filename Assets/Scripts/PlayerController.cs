@@ -33,9 +33,7 @@ public class PlayerController : MonoBehaviour
     public bool isDashing=false;
     public TrailRenderer dashTrail;
 
-    public float maxPushForce =20f;
-    private float pushTimer=0f;
-    private bool isPushingCharge=false;
+
 
     public enum FacingDirection
     {
@@ -99,10 +97,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void PushBox()
-    {
-        
-    }
+
 
     private void StateUpdate()
     {
