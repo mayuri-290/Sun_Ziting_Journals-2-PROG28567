@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour
     public float dashDuration=0.2f;
     public bool isDashing=false;
     public TrailRenderer dashTrail;
+
+    public float maxPushForce =20f;
+    private float pushTimer=0f;
+    private bool isPushingCharge=false;
+
     public enum FacingDirection
     {
         left, right
@@ -91,6 +96,12 @@ public class PlayerController : MonoBehaviour
         {
             playerRigidbody.linearVelocityY += 21f * Time.deltaTime;
         }
+
+    }
+
+    private void PushBox()
+    {
+        
     }
 
     private void StateUpdate()
