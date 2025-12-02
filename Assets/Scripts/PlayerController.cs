@@ -28,6 +28,10 @@ public class PlayerController : MonoBehaviour
     private bool hasDied = false;
     bool isGrounded;
 
+    public float dashForce=20f;
+    public float dashDuration=0.2f;
+    public bool isDashing=false;
+
     public enum FacingDirection
     {
         left, right
@@ -114,10 +118,17 @@ public class PlayerController : MonoBehaviour
             {
                 playerRigidbody.linearVelocityY = terminalSpeed;
             }
+        
+       // playerRigidbody.linearVelocityX = currentVelocity.x;
     }
 
     private void MovementUpdate(Vector2 playerInput)
     {
+        if(isDashing)
+        {
+            return;
+        }
+
         playerInput.x = Input.GetAxisRaw("Horizontal");
         playerRigidbody.AddForce(playerInput * speed);     
 
@@ -149,6 +160,12 @@ public class PlayerController : MonoBehaviour
                 currentVelocity -= amountWeWantToChange;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
+        {
+        StartCoroutine(Dash());
+        }
+        
      }
 
     public bool HasDied()
@@ -184,5 +201,19 @@ public class PlayerController : MonoBehaviour
             currentFacing = FacingDirection.left;
         }
         return currentFacing;
+    }
+
+    private IEnumerator Dash()
+    {
+        isDashing = true;
+        playerRigidbody.linearVelocityX = 0;
+        float dashDirection = 1f;
+        if(currentFacing == FacingDirection.left)
+        {
+            dashDirection = -1f;
+        }
+        playerRigidbody.linearVelocityX = dashDirection * dashForce;
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
     }
 }
