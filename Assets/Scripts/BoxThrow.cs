@@ -44,7 +44,7 @@ public class BoxThrow : MonoBehaviour
         }   
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision) //if the player is close enough to the box, it will pick up. 
     {
         if(collision.gameObject.CompareTag("Player"))
         {
@@ -52,7 +52,7 @@ public class BoxThrow : MonoBehaviour
             playerTouching = true;
         }
     }
-    void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)//when the player moves away from the box, it will drop the box, bool become false. 
     {
         if(collision.gameObject.CompareTag("Player"))
         {
