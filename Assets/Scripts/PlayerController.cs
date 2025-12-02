@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public float dashForce=20f;
     public float dashDuration=0.2f;
     public bool isDashing=false;
-
+    public TrailRenderer dashTrail;
     public enum FacingDirection
     {
         left, right
@@ -79,6 +79,18 @@ public class PlayerController : MonoBehaviour
         MovementUpdate(playerInput);
         //Debug.Log(playerInput); 
         StateUpdate ();
+
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            if (playerRigidbody.linearVelocityY > 0)
+            {
+                playerRigidbody.linearVelocityY *= 0.3f;
+            }
+        }
+        if(Input.GetKey(KeyCode.Space) && !isGrounded && playerRigidbody.linearVelocityY > 0)
+        {
+            playerRigidbody.linearVelocityY += 21f * Time.deltaTime;
+        }
     }
 
     private void StateUpdate()
@@ -165,7 +177,7 @@ public class PlayerController : MonoBehaviour
         {
         StartCoroutine(Dash());
         }
-        
+
      }
 
     public bool HasDied()
@@ -206,6 +218,9 @@ public class PlayerController : MonoBehaviour
     private IEnumerator Dash()
     {
         isDashing = true;
+
+        dashTrail.emitting = true;
+
         playerRigidbody.linearVelocityX = 0;
         float dashDirection = 1f;
         if(currentFacing == FacingDirection.left)
@@ -215,5 +230,6 @@ public class PlayerController : MonoBehaviour
         playerRigidbody.linearVelocityX = dashDirection * dashForce;
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
+        dashTrail.emitting = false;
     }
 }
